@@ -1,24 +1,19 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import { ServiceProps } from '@/utils/home.type'
+import { AboutProps, ServiceProps } from "@/utils/home.type";
 
-interface AboutProps {
-  object: {
-    description: string;
-    aboutImage: {
-      url: string
-    };
-    services: ServiceProps[]
-  }
+interface ReceivedServiceProps {
+  about: AboutProps;
+  services: ServiceProps[];
 }
 
-export function Services({ object }: AboutProps) {
+export function Services({ about, services }: ReceivedServiceProps) {
   return (
     <>
-      <section className={styles.containerAbout}>
+      <section className={styles.containerAbout} id="services">
         <article className={styles.innerAbout}>
           <h1 className={styles.title}>Sobre</h1>
-          <p>{object.description}</p>
+          <p>{about.description}</p>
         </article>
         <div className={styles.aboutBanner}>
           <Image
@@ -26,18 +21,29 @@ export function Services({ object }: AboutProps) {
             alt="Imagem ilustrativa da empresa"
             quality={100}
             fill={true}
-            src={`${process.env.NEXT_PUBLIC_API_URL}${object.aboutImage.url}`}
+            src={`${process.env.NEXT_PUBLIC_API_URL}${about.aboutImage.url}`}
           />
         </div>
       </section>
+
       <h2 className={styles.servicesTitle}>Conheça nossos serviços</h2>
       <section className={styles.services}>
-        {object.services.map((service) => (
-          <article key={service.servicename} className={styles.services}>
+        {services.map((service) => (
+          <article key={service.servicename} className={styles.service}>
+            <div className={styles.innerService}>
+              <Image
+                className={styles.imageService}
+                alt={"Imagem do serviço"}
+                quality={100}
+                fill={true}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${service.serviceImage.url}`}
+              />
+            </div>
 
+            <p>{service.servicename}</p>
           </article>
         ))}
-      </section >
+      </section>
     </>
   );
 }

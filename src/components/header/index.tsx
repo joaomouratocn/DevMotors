@@ -26,8 +26,8 @@ export function Header() {
           </div>
           <nav className={styles.nav}>
             <Link href="/">Home</Link>
-            <Link href="/#servicos">Serviços</Link>
-            <Link href="/#contatos">Contatos</Link>
+            <Link href="/#services">Serviços</Link>
+            <Link href="/#contacts">Contatos</Link>
           </nav>
         </div>
       </div>
