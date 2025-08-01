@@ -3,6 +3,8 @@ import { getDataHome } from "@/utils/actions/get-data";
 import { HomeProps } from "@/utils/home.type";
 import { Hero } from "@/components/hero";
 import { Phone } from "lucide-react";
+import { Services } from "@/components/home/services";
+import { Container } from "@/components/container";
 
 export default async function Home() {
   const { data }: HomeProps = await getDataHome();
@@ -16,6 +18,10 @@ export default async function Home() {
         buttonUrl={data.ACAO.buttonUrl}
         icon={<Phone size={24} color="#FFF" />}
       />
+
+      <Container>
+        <Services object={data.SOBRE} />
+      </Container>
     </main>
   );
 }

@@ -1,32 +1,34 @@
 export interface HomeProps {
-  data: {
-    SAUDACAO: {
-      greetText: string;
-      greetBanner: {
-        url: string;
-      };
-    };
-    SOBRE: {
-      description: string;
-      aboutImage: string;
-    };
-    SERVICOS: ServiceProps[];
-    ACAO: {
-      buttonText: string;
-      buttonUrl: string;
-    };
-    CONTATO: {
-      phone: string;
-      email: string;
-    };
-  };
+	data: {
+		SAUDACAO: {
+			greetText: string;
+			greetBanner: {
+				url: string;
+			};
+		};
+		SOBRE: {
+			description: string;
+			aboutImage: {
+				url: string
+			}
+		};
+		SERVICOS: ServiceProps[];
+		ACAO: {
+			buttonText: string;
+			buttonUrl: string;
+		};
+		CONTATO: {
+			phone: string;
+			email: string;
+		};
+	};
 }
 
-interface ServiceProps {
-  servicename: string;
-  serviceImage: {
-    url: string;
-  };
+export interface ServiceProps {
+	servicename: string;
+	serviceImage: {
+		url: string;
+	};
 }
 
 /**
