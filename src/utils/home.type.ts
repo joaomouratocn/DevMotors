@@ -1,18 +1,24 @@
 export interface HomeProps {
-  data: {
-    SAUDACAO: {
-      greetText: string;
-      greetBanner: {
-        url: string;
-      };
+  SAUDACAO: {
+    greetText: string;
+    greetBanner: {
+      url: string;
     };
-    SOBRE: AboutProps;
-    SERVICOS: ServiceProps[];
-    ACAO: {
-      buttonText: string;
-      buttonUrl: string;
+  };
+  SOBRE: {
+    description: string;
+    aboutImage: {
+      url: string;
     };
-    CONTATO: ContactProps;
+  };
+  SERVICOS: ServiceProps[];
+  ACAO: {
+    buttonText: string;
+    buttonUrl: string;
+  };
+  CONTATO: {
+    phone: string;
+    email: string;
   };
 }
 
@@ -23,14 +29,7 @@ export interface ServiceProps {
   };
 }
 
-export interface AboutProps {
-  description: string;
-  aboutImage: {
-    url: string;
-  };
-}
-
-export interface ContactProps {
-  phone: string;
-  email: string;
+export interface PageItemProps {
+  documentId: string;
+  TITLE: string
 }

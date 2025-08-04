@@ -3,9 +3,18 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { X, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
+import { PageItemProps } from "@/utils/home.type";
 
-export function Submenu() {
+interface ReceivedProps {
+  data: PageItemProps[]
+}
+
+export function Submenu(props: ReceivedProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  props.data.map((item) => {
+    console.log(item)
+  })
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,15 +44,11 @@ export function Submenu() {
             <X size={34} color="#121212" />
           </button>
         )}
-        <li>
-          <Link href="/post/pg1">Página 1</Link>
-        </li>
-        <li>
-          <Link href="/post/pg2">Página 2</Link>
-        </li>
-        <li>
-          <Link href="/post/pg3">Página 3</Link>
-        </li>
+        {props.data.map((page) => (
+          <li>
+            <Link href={`/pages/${page.documentId}`}>{page.TITLE}</Link>
+          </li>
+        ))}
       </ul>
     </section>
   );
