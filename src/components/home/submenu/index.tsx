@@ -3,18 +3,14 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { X, Menu } from "lucide-react";
 import { useEffect, useState } from "react";
-import { PageItemProps } from "@/utils/home.type";
+import { PageItemProps } from "@/utils/types.type";
 
 interface ReceivedProps {
-  data: PageItemProps[]
+  data: PageItemProps[];
 }
 
 export function Submenu(props: ReceivedProps) {
   const [isOpen, setIsOpen] = useState(false);
-
-  props.data.map((item) => {
-    console.log(item)
-  })
 
   useEffect(() => {
     const handleResize = () => {
@@ -45,7 +41,7 @@ export function Submenu(props: ReceivedProps) {
           </button>
         )}
         {props.data.map((page) => (
-          <li>
+          <li key={page.documentId}>
             <Link href={`/pages/${page.documentId}`}>{page.TITLE}</Link>
           </li>
         ))}

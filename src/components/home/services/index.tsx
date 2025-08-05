@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./styles.module.scss";
-import { AboutProps, ServiceProps } from "@/utils/home.type";
+import { AboutProps, ServiceProps } from "@/utils/types.type";
 
 interface ReceivedServiceProps {
   about: AboutProps;
@@ -21,6 +21,7 @@ export function Services({ about, services }: ReceivedServiceProps) {
             alt="Imagem ilustrativa da empresa"
             quality={100}
             fill={true}
+            sizes="(max-width: 480px) 100vw (max-width:1024) 75vw, 60vw"
             src={`${process.env.NEXT_PUBLIC_API_URL}${about.aboutImage.url}`}
           />
         </div>
@@ -36,6 +37,7 @@ export function Services({ about, services }: ReceivedServiceProps) {
                 alt={"Imagem do serviço"}
                 quality={100}
                 fill={true}
+                sizes="(max-width: 480px) 100vw (max-width:1024) 75vw, 60vw"
                 src={`${process.env.NEXT_PUBLIC_API_URL}${service.serviceImage.url}`}
               />
             </div>

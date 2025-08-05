@@ -1,49 +1,110 @@
-import styles from './styles.module.scss'
+import styles from "./styles.module.scss";
+import { getDataPage } from "@/utils/actions/get-data";
+import { Hero } from "@/components/hero";
+import { Phone } from "lucide-react";
+import { Container } from "@/components/container";
+import Image from "next/image";
+import { Metadata } from "next";
+import { PageProps } from "@/utils/types.type";
 
-async function getPageData(pageid: string) {
-    try {
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/pages/${pageid}?populate=*`
-        const response = await fetch(
-            url, {
-            next: { revalidate: 120 },
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${process.env.TOKEN_API}`,
-                "Content-Type": "application/json",
-            },
-        })
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ pageid: string }>;
+}): Promise<Metadata> {
+  try {
+    const dataPage: PageProps = await getDataPage((await params).pageid);
 
-        if (!response.ok) {
-            const errorInfo = await response.text();
-            console.error("Erro na requisição Strapi:", response.status, errorInfo);
-            throw new Error(`Strapi retornou status ${response.status}`);
-        }
-
-        const json = await response.json()
-
-        if (!json.data) {
-            console.log('Estrutura inesperada')
-            throw new Error('Resposta inesperada da API')
-        }
-
-        console.log(JSON.stringify(json.data, null, 2))
-
-        const mapedObject = {
-
-        }
-    } catch (error) {
-        console.error("Falha ao buscar dados home:", error);
-        throw error;
+    if (!dataPage) {
+      return {
+        title: "Dev-Motors - Sua oficina especializada",
+        description: "Oficina de carros em São Carlos",
+      };
     }
+
+    return {
+      title: `Dev-Motors - ${dataPage.TITLE}`,
+      description: `${dataPage.CONTENT_PAGE.description}`,
+      keywords: [
+        "Oficina",
+        "Oficina de Carros",
+        "Carros",
+        "Manutenção de carros",
+      ],
+      openGraph: {
+        title: `Dev-Motors - ${dataPage.TITLE}`,
+        images: [`${process.env.NEXT_PUBLIC_API_URL}${dataPage.BANNER.url}`],
+      },
+      robots: {
+        index: true,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          noimageindex: true,
+        },
+      },
+    };
+  } catch (error) {
+    return {
+      title: "Dev-Motors - Sua oficina especializada",
+      description: "Oficina de carros em São Carlos",
+    };
+  }
 }
 
-export default async function Page({ params }: { params: Promise<{ pageid: string }> }) {
-    const pageId = (await params).pageid
-    const dataPage = await getPageData(pageId)
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ pageid: string }>;
+}) {
+  const pageId = (await params).pageid;
+  const dataPage = await getDataPage(pageId);
 
-    return (
-        <main className={styles.main}>
-            <h1>PAGE</h1>
-        </main>
-    )
+  const formatedGreeting = {
+    greetText: dataPage.TITLE,
+    greetBanner: {
+      url: dataPage.BANNER.url,
+    },
+  };
+
+  return (
+    <>
+      <Hero
+        greeting={formatedGreeting}
+        actButton={dataPage.banner_button}
+        icon={<Phone size={24} color="#FFF" />}
+      />
+
+      <Container>
+        <section className={styles.about}>
+          <article className={styles.innerAbout}>
+            <h1 className={styles.title}>{dataPage.CONTENT_PAGE.title}</h1>
+            <p>{dataPage.CONTENT_PAGE.description}</p>
+            {dataPage.CONTENT_PAGE.show_button && (
+              <a
+                href={dataPage.CONTENT_PAGE.description}
+                target="_blank"
+                className={styles.link}
+              >
+                Detalhes
+              </a>
+            )}
+          </article>
+          <div className={styles.bannerAbout}>
+            <Image
+              className={styles.imageAbout}
+              alt={dataPage.TITLE}
+              quality={100}
+              fill={true}
+              priority={true}
+              sizes="(max-width: 480px) 100vw (max-width:1024) 75vw, 60vw"
+              src={`${process.env.NEXT_PUBLIC_API_URL}${dataPage.CONTENT_PAGE.content_image.url}`}
+            />
+          </div>
+        </section>
+      </Container>
+    </>
+  );
 }

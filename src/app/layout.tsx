@@ -14,8 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dev-Motors",
-  description: "Sua oficina especializada",
+  title: "Dev-Motors - Sua oficina especializada",
+  description: "Oficina de carros em São Carlos",
+  keywords: ["Oficina", "Oficina de Carros", "Carros", "Manutenção de carros"],
+  openGraph: {
+    title: "Dev-Motors - Sua oficina especializada",
+    images: [`${process.env.NEXT_PUBLIC_URL}/logo.jpg`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +43,10 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Header />
         {children}
+        <p style={{ textAlign: "center", marginTop: 54, marginBottom: 24 }}>
+          Todos direitos resevados a Arthivia Solutions @
+          {`${new Date().getFullYear()}`}
+        </p>
       </body>
     </html>
   );

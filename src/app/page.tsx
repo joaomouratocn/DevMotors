@@ -1,6 +1,6 @@
 import { Submenu } from "@/components/home/submenu";
 import { getDataHome, getSubMenu } from "@/utils/actions/get-data";
-import { HomeProps, PageItemProps } from "@/utils/home.type";
+import { HomeProps, PageItemProps } from "@/utils/types.type";
 import { Hero } from "@/components/hero";
 import { Phone } from "lucide-react";
 import { Services } from "@/components/home/services";
@@ -12,9 +12,7 @@ export default async function Home() {
   const pageItens: PageItemProps[] = await getSubMenu();
   return (
     <main>
-      {pageItens && (
-        <Submenu data={pageItens} />
-      )}
+      {pageItens && <Submenu data={pageItens} />}
       <Hero
         greeting={homeProps.SAUDACAO}
         actButton={homeProps.ACAO}

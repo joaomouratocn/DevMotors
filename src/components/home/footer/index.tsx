@@ -1,9 +1,11 @@
-import { ContactProps } from "@/utils/home.type";
 import styles from "./styles.module.scss";
 import { Phone, Mail, Map, Clock } from "lucide-react";
 
 interface ReceivedContact {
-  contact: ContactProps;
+  contact: {
+    phone: string;
+    email: string;
+  };
 }
 
 export function Footer({ contact }: ReceivedContact) {
@@ -53,11 +55,6 @@ export function Footer({ contact }: ReceivedContact) {
         <Phone size={24} color="#FFF" />
         Fale com um atendente
       </a>
-
-      <p className={styles.copyText}>
-        Todos direitos resevados a Arthivia Solutions @
-        {`${new Date().getFullYear()}`}
-      </p>
     </footer>
   );
 }

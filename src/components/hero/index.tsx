@@ -8,19 +8,15 @@ interface ReceivedProps {
     greetBanner: {
       url: string;
     };
-  }
+  };
   actButton: {
     buttonText: string;
     buttonUrl: string;
-  }
+  };
   icon: ReactNode;
 }
 
-export function Hero({
-  greeting,
-  actButton,
-  icon,
-}: ReceivedProps) {
+export function Hero({ greeting, actButton, icon }: ReceivedProps) {
   return (
     <main className={styles.main}>
       <div className={styles.containerHero}>
@@ -37,6 +33,7 @@ export function Hero({
           priority={true}
           quality={100}
           fill={true}
+          sizes="(max-width: 480px) 100vw (max-width:1024) 75vw, 60vw"
           className={styles.banner}
         />
       </div>
